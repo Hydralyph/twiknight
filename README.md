@@ -5,12 +5,14 @@ TwiKnight is a 2D action sidescroller game based around a time of day mechanic.
 ADD MORE DETAILS HERE PLEASE, I DON'T KNOW WHAT THE FUCK I'M DOING.
 
 <hr>
-# FIRST SETUP of PROJECT
+
+### FIRST SETUP of PROJECT
+
 1. Make sure you have downloaded the latest LTS version of Unity. This should be **2021.3.25f1**. If you have another version installed, install this version instead.
   
-  A. You can check what version you have installed by clicking on the "Installs" tab on the left sidebar of Unity Hub. Then when you click "Install Editor", that version should appear.
-  
-  B. When the install dialogue comes up, make sure to click the checkbox for "Windows Build Support (IL2CPP)".
+  > **Note**
+> You can check what version you have installed by clicking on the "Installs" tab on the left sidebar of Unity Hub. Then when you click "Install Editor", that version should appear.
+          When the install dialogue comes up, make sure to click the checkbox for "Windows Build Support (IL2CPP)".
 
 2. Once this is all done, open up either your systems terminal, or the Git terminal to whatever folder you want the project to sit inside of, and continue.
 
