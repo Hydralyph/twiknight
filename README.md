@@ -18,6 +18,9 @@ ADD MORE DETAILS HERE PLEASE, I DON'T KNOW WHAT THE FUCK I'M DOING.
 
 3. Use "git clone https://github.com/Hydralyph/twiknight.git" to grab the repo for first use. ***MAKE SURE TO HAVE YOUR TERMINAL IN THE FOLDER YOU WISH THE REPO TO BE CLONED TO.***
 
+> **Warning**
+> Before proceeding, you will have to change directories to jump inside of the "twiknight" folder that was cloned. You can do this either by using the same terminal and the cd command, or by opening a terminal in the "twiknight" folder.
+
 4. Type "git checkout BRANCH_NAME", where BRANCH_NAME is your first name in lowercase. *You can check the branches on Github to ensure the branch you are using is correctly named.*
 
 5. Type "git pull origin BRANCH_NAME", where BRANCH_NAME is the same as before. This should update the local repo if anything has changed (which it shouldn't have).
