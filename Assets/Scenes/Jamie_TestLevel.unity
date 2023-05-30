@@ -501,5 +501,44 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3575475154277919928, guid: a39048ffa6831e14c826145a0f0fb22c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a39048ffa6831e14c826145a0f0fb22c, type: 3}
+--- !u!1 &1682463877 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3575475154277919923, guid: a39048ffa6831e14c826145a0f0fb22c, type: 3}
+  m_PrefabInstance: {fileID: 1682463876}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1682463878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682463877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56580f994c3c1e349a3a0903c787f08b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: {fileID: 11400000, guid: ddd4fe69f7a81db419c871582b4cef9e, type: 2}
+  jumpHeight: 3
+  maxAirJumps: 0
+  downMovementMulti: 3
+  upMovementMulti: 1.7
+--- !u!114 &1682463879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682463877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93c8ee1dc9143d84693fdb1678bf4f1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: {fileID: 11400000, guid: ddd4fe69f7a81db419c871582b4cef9e, type: 2}
+  maxSpeed: 8
+  maxAccel: 35
+  maxAirAccel: 20
