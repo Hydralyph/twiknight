@@ -15,10 +15,21 @@ public class PauseMenu : MonoBehaviour
         {
             if (GameIsPaused)
             {
+                AudioSource[] audios = FindObjectsOfType<AudioSource>();
+                foreach (AudioSource a in audios)
+                {
+                    a.Play();
+                }
                 Resume();
+
             }
             else
             {
+                AudioSource[] audios = FindObjectsOfType<AudioSource>();
+                foreach (AudioSource a in audios)
+                {
+                    a.Pause();
+                }
                 Pause();
             }
         }   
