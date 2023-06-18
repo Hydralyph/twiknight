@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Windows;
@@ -15,6 +16,7 @@ public class PlayerManager : MonoBehaviour
     private bool IsSprinting { get; set; }
     private bool IsJumping { get; set; }
     private bool IsGrounded { get; set; }
+    private bool AnimationLocked { get; set; }
 
     // Movement Variables
     //[SerializeField, Range(1f, 50f)] private float walkSpeed;
@@ -40,13 +42,19 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private LayerMask collidableGround;
     private Camera playerCamera;
     private Rigidbody2D playerRB;
-    private BoxCollider2D boxCastCol;
-    // private Vector2 moveDirection;
+    private BoxCollider2D playerCollider;
+    
+    // Animator variables
+    private Animator playerAnimator;
+    [SerializeField] private SpriteRenderer playerSpriteRenderer;
+    private static readonly int Anim_Idle = Animator.StringToHash("PlayerIdle");
+    private static readonly int Anim_Walk = Animator.StringToHash("PlayerWalk");
+
     // Todo: Add a <Weapon> List, after creating the Weapon class (maybe scriptable object?)
-    private int currentWeapon; // Note: Could potentially hash these instead, check first watch later video
-    private int livesLeft;
-    private int movementSkillLevel = 1;
-    private int attackSkillLevel = 1;
+    //private int currentWeapon; // Note: Could potentially hash these instead, check first watch later video
+    //private int livesLeft;
+    //private int movementSkillLevel = 1;
+    //private int attackSkillLevel = 1;
 
 
     // Start is called before the first frame update
@@ -67,22 +75,49 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
-        boxCastCol = GetComponent<BoxCollider2D>();
+        playerCollider = GetComponent<BoxCollider2D>();
+        playerAnimator = GetComponentInParent<Animator>();
+        
 
         inputManager.MoveEvent += HandleMovement;
         inputManager.JumpEvent += HandleJump;
         inputManager.JumpCancelledEvent += HandleJumpCancel;
+
+        // Animation hashes for easy anim crossfade in code
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(playerRB.velocity.x > 0.2)
+        {
+            playerAnimator.CrossFade(Anim_Walk, 0f, 0);
+        } 
+        else if(playerRB.velocity.x < -0.2)
+        {
+            playerAnimator.CrossFade(Anim_Walk, 0f, 0);
+        }
+        else
+        {
+            playerAnimator.CrossFade(Anim_Idle, 0f, 0);
+        }
+
+        if (direction.x < 0)
+        {
+            playerSpriteRenderer.flipX = true;
+        }
+        else if (direction.x > 0)
+        {
+            playerSpriteRenderer.flipX = false;
+        }
+
+        // Reset to Idle animation just in case these checks fail
     }
 
     private void FixedUpdate()
     {
+        CheckGrounded();
         desiredMoveVelocity = new Vector2(direction.x, 0f) * Mathf.Max(maxSpeed, 0f);
 
         // IS GROUNDED CHECK?
@@ -92,11 +127,11 @@ public class PlayerManager : MonoBehaviour
         maxSpeedChange = acceleration * Time.fixedDeltaTime;
         moveVelocity.x = Mathf.MoveTowards(moveVelocity.x, desiredMoveVelocity.x, maxSpeedChange);
 
-        if (playerRB.velocity.y > 0)
+        if (playerRB.velocity.y > 0 || IsJumping == true)
         {
             playerRB.gravityScale = upMovementMulti;
         }
-        else if (playerRB.velocity.y < 0)
+        else if (playerRB.velocity.y < 0 || IsJumping == true)
         {
             playerRB.gravityScale = downMovementMulti;
         }
@@ -116,7 +151,7 @@ public class PlayerManager : MonoBehaviour
 
     private void HandleJump()
     {
-        if(IsJumping == false)
+        if(IsJumping == false && IsGrounded == true)
         {
             IsJumping = true;
             float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
@@ -127,7 +162,6 @@ public class PlayerManager : MonoBehaviour
             }
 
             moveVelocity.y += jumpSpeed;
-            IsJumping = false;
             playerRB.velocity = moveVelocity;
 
         } else if(IsGrounded == false || IsJumping == true)
@@ -161,11 +195,10 @@ public class PlayerManager : MonoBehaviour
 
     #region Misc Functions
 
-    private bool CheckGrounded()
+    private void CheckGrounded()
     {
-        Physics2D.BoxCast(boxCastCol.bounds.center, boxCastCol.bounds.size, 0f, Vector2.down, .1f, collidableGround);
-        // TODO: Fix this later, with either an overlap circle or Boxcast || https://www.youtube.com/watch?v=c3iEl5AwUF8
-        return false;
+        IsGrounded = Physics2D.OverlapBox(new Vector2(playerCollider.bounds.center.x, playerCollider.bounds.min.y + .05f), new Vector2(0.5f, 0.5f), 0f, collidableGround);
+        // TODO: Fix this later, with either an overlap circle or Boxcast || https://www.youtube.com/watch?v=c3iEl5AwUF8d
     }
 
     #endregion
