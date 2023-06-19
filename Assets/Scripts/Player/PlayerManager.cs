@@ -18,12 +18,7 @@ public class PlayerManager : MonoBehaviour
     private bool IsGrounded { get; set; }
     private bool AnimationLocked { get; set; }
 
-    // Movement Variables
-    //[SerializeField, Range(1f, 50f)] private float walkSpeed;
-    //[SerializeField, Range(1f, 50f)] private float sprintSpeed;
-    //[SerializeField, Range(1f, 50f)] private float jumpSpeed;
-
-    // Velocity Variables
+    // Velocity/Movement Variables
     [SerializeField, Range(0f, 100f)] private float maxSpeed = 4f;
     [SerializeField, Range(0f, 100f)] private float maxAccel = 35f;
     [SerializeField, Range(0f, 100f)] private float maxAirAccel = 20f;
@@ -39,6 +34,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField, Range(0f, 5f)] private float upMovementMulti = 1.7f;
     private float defaultGravityScale;
 
+    // Misc Variables
     [SerializeField] private LayerMask collidableGround;
     private Camera playerCamera;
     private Rigidbody2D playerRB;
@@ -49,6 +45,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private SpriteRenderer playerSpriteRenderer;
     private static readonly int Anim_Idle = Animator.StringToHash("PlayerIdle");
     private static readonly int Anim_Walk = Animator.StringToHash("PlayerWalk");
+    private static readonly int Anim_Jump = Animator.StringToHash("PlayerJump");
+    private static readonly int Anim_Fall = Animator.StringToHash("PlayerFall");
+    private static readonly int Anim_Attack = Animator.StringToHash("PlayerAttack");
 
     // Todo: Add a <Weapon> List, after creating the Weapon class (maybe scriptable object?)
     //private int currentWeapon; // Note: Could potentially hash these instead, check first watch later video
@@ -82,21 +81,23 @@ public class PlayerManager : MonoBehaviour
         inputManager.MoveEvent += HandleMovement;
         inputManager.JumpEvent += HandleJump;
         inputManager.JumpCancelledEvent += HandleJumpCancel;
-
-        // Animation hashes for easy anim crossfade in code
-
+        inputManager.AttackEvent += HandleAttack;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(playerRB.velocity.x > 0.2)
+        if (playerRB.velocity.y > 0.2 && IsJumping == true)
         {
-            playerAnimator.CrossFade(Anim_Walk, 0f, 0);
-        } 
-        else if(playerRB.velocity.x < -0.2)
+            playerAnimator.CrossFade(Anim_Jump, 0f, 0);
+        }
+        else if (playerRB.velocity.y < 0.2 && IsGrounded == false)
         {
-            playerAnimator.CrossFade(Anim_Walk, 0f, 0);
+            playerAnimator.CrossFade(Anim_Fall, 0f, 0);
+        }
+        else if (playerRB.velocity.x > 0.2 || playerRB.velocity.x < -0.2)
+        {
+            playerAnimator.CrossFade(Anim_Walk, 0, 0);
         }
         else
         {
@@ -112,12 +113,13 @@ public class PlayerManager : MonoBehaviour
             playerSpriteRenderer.flipX = false;
         }
 
-        // Reset to Idle animation just in case these checks fail
+        //Reset to Idle animation just in case these checks fail
     }
 
     private void FixedUpdate()
     {
         CheckGrounded();
+        Debug.Log($"IsGrounded: {IsGrounded}");
         desiredMoveVelocity = new Vector2(direction.x, 0f) * Mathf.Max(maxSpeed, 0f);
 
         // IS GROUNDED CHECK?
@@ -177,9 +179,9 @@ public class PlayerManager : MonoBehaviour
         IsJumping = false;
     }
 
-    private void Attack()
+    private void HandleAttack()
     {
-
+        //playerAnimator.CrossFade(Anim_Attack, 0, 0);
     }
 
     private void Interact()
@@ -197,9 +199,15 @@ public class PlayerManager : MonoBehaviour
 
     private void CheckGrounded()
     {
-        IsGrounded = Physics2D.OverlapBox(new Vector2(playerCollider.bounds.center.x, playerCollider.bounds.min.y + .05f), new Vector2(0.5f, 0.5f), 0f, collidableGround);
+        IsGrounded = Physics2D.OverlapBox(new Vector2(playerCollider.bounds.center.x, playerCollider.bounds.min.y + -0.3f), new Vector2(0.75f, 0.5f), 0f, collidableGround);
         // TODO: Fix this later, with either an overlap circle or Boxcast || https://www.youtube.com/watch?v=c3iEl5AwUF8d
     }
+
+    // THIS FUNCTION IS ONLY HERE FOR DEBUG TESTING OF THE GROUND CHECK, TO REMOVE LATER
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawCube(new Vector2(playerCollider.bounds.center.x, playerCollider.bounds.min.y + -0.3f), new Vector3(0.75f, 0.5f, 0.1f));
+    //}
 
     #endregion
 }
