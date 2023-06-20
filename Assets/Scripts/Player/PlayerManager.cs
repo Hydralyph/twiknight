@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private InputManager inputManager;
     
     // Player Properties
-    private bool CanMove { get; set; }
+    public bool CanMove { get; set; }
     private bool IsSprinting { get; set; }
     private bool IsJumping { get; set; }
     private bool IsGrounded { get; set; }
@@ -69,6 +69,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         defaultGravityScale = 1f;
+        CanMove = true;
     }
 
     private void Start()
@@ -119,7 +120,10 @@ public class PlayerManager : MonoBehaviour
     private void FixedUpdate()
     {
         CheckGrounded();
-        Debug.Log($"IsGrounded: {IsGrounded}");
+        if (IsGrounded == true)
+        {
+            IsJumping = false;
+        }
         desiredMoveVelocity = new Vector2(direction.x, 0f) * Mathf.Max(maxSpeed, 0f);
 
         // IS GROUNDED CHECK?
@@ -140,6 +144,12 @@ public class PlayerManager : MonoBehaviour
         else if (playerRB.velocity.y == 0)
         {
             playerRB.gravityScale = defaultGravityScale;
+        }
+
+        if(CanMove == false)
+        {
+            playerRB.velocity = new Vector2(0, moveVelocity.y);
+            return;
         }
 
         playerRB.velocity = moveVelocity;
@@ -176,17 +186,17 @@ public class PlayerManager : MonoBehaviour
 
     private void HandleJumpCancel()
     {
-        IsJumping = false;
+
     }
 
     private void HandleAttack()
     {
         //playerAnimator.CrossFade(Anim_Attack, 0, 0);
+        CanMove = !CanMove;
     }
 
     private void Interact()
     {
-
     }
 
     private void SwitchWeapon()
