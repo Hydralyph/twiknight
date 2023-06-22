@@ -38,6 +38,7 @@ public class InputManager : ScriptableObject, ControlScheme.IGameplayActions, Co
     public event Action JumpEvent;
     public event Action JumpCancelledEvent;
     public event Action InteractEvent;
+    public event Action AttackEvent;
 
     public event Action PauseEvent;
     public event Action ResumeEvent;
@@ -63,6 +64,11 @@ public class InputManager : ScriptableObject, ControlScheme.IGameplayActions, Co
     public void OnMove(InputAction.CallbackContext context)
     {
         MoveEvent?.Invoke(context.ReadValue<Vector2>());
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        AttackEvent?.Invoke();
     }
 
     public void OnPause(InputAction.CallbackContext context)
