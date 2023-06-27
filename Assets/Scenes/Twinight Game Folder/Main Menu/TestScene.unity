@@ -212,6 +212,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3575475154277919923, guid: a39048ffa6831e14c826145a0f0fb22c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3575475154277919926, guid: a39048ffa6831e14c826145a0f0fb22c, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -60185,8 +60189,7 @@ MonoBehaviour:
   dialogue:
     name: TUTORIAL
     sentences:
-    - Press BLANK to interact with ladders!
-    - Prfdgfdgsg
+    - Press SPACE to jump!
   dialogueManager: {fileID: 570846307}
 --- !u!61 &1827390054
 BoxCollider2D:

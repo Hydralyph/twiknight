@@ -6,20 +6,19 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
-    public TMP_Text nameText;
-    public TMP_Text dialogueText;
+    public TMP_Text nameText; // Name Text Field
+    public TMP_Text dialogueText; // Dialogue Text Field
 
-    public Animator animator;
+    public Animator animator; // For animating the opening and closing of the Dialogue Box
 
-    private Queue<string> sentences;
+    private Queue<string> sentences; // For the sentences contained in the dialogue sequence
 
-    // Start is called before the first frame update
     void Start()
     {
         sentences = new Queue<string>();
     }
 
-    public void StartDialogue (Dialogue dialogue)
+    public void StartDialogue (Dialogue dialogue) // Core function to start dialogue and tell animator to open the dialogue box with the required text fields filled in
     {
         animator.SetBool("isOpen", true);
         
@@ -37,7 +36,7 @@ public class DialogueManager : MonoBehaviour
         DisplayNextSentence();
     }
 
-    public void DisplayNextSentence ()
+    public void DisplayNextSentence () // To move to the next sequence in the list of the trigger/object
     {
         if (sentences.Count == 0)
         {
@@ -51,7 +50,7 @@ public class DialogueManager : MonoBehaviour
         Debug.Log(sentence);
     }
 
-    IEnumerator TypeSentence (string sentence)
+    IEnumerator TypeSentence (string sentence) // To 'animate' the letters one by one, akin to common RPG game dialogue boxes
     {
         dialogueText.text = "";
         foreach (char letter in sentence.ToCharArray())
@@ -62,7 +61,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EndDialogue()
+    public void EndDialogue() // To tell the animator to close the dialogue box once the dialogue has been finished
     {
         Debug.Log("End of conversation");
         animator.SetBool("isOpen", false);
