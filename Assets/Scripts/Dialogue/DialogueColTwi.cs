@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogueCollision : MonoBehaviour
+public class DialogueColTwi : MonoBehaviour
 {
     public DialogueManager dialoguemanager;
     public DialogueTrigger dialoguetrigger;
     public GameObject testButton;
     public GameObject testButton2;
+    public TwilightManager twilightmanager;
     private bool hasPlayer;
+    private bool hasTalked;
     
     private void Update()
     {
@@ -19,6 +21,17 @@ public class DialogueCollision : MonoBehaviour
             // PlayerManager.playerManager.CanMove = false;
             Debug.Log("Pressed X");
             dialoguetrigger.TriggerDialogue();
+            if (hasTalked == false)
+            {
+                twilightmanager.twilightcount += 1;
+                Debug.Log("Twilight Count: " + twilightmanager.twilightcount);
+                hasTalked = true;
+            }
+            else
+            {
+                Debug.Log("Already talked to, Twilight Count: " + twilightmanager.twilightcount);
+            }
+
             // PlayerManager.playerManager.CanMove = true;
         }
     }
