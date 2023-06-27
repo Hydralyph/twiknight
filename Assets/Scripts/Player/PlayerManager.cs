@@ -3,12 +3,14 @@
  * Last Updated: 27/06/23 14:00
  */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Windows;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -18,10 +20,18 @@ public class PlayerManager : MonoBehaviour
     
     // Player Properties
     public bool CanMove { get; set; }
-    private bool IsSprinting { get; set; }
     private bool IsJumping { get; set; }
+    private bool IsAttacking { get; set; }
     private bool IsGrounded { get; set; }
-    private bool AnimationLocked { get; set; }
+
+    enum AnimationState
+    {
+        Idle,
+        Walk,
+        Jump,
+        Fall,
+        Attack
+    }
 
     // Velocity/Movement Variables
     [SerializeField, Range(0f, 100f)] private float maxSpeed = 4f;
@@ -48,6 +58,9 @@ public class PlayerManager : MonoBehaviour
     // Animator variables
     private Animator playerAnimator;
     [SerializeField] private SpriteRenderer playerSpriteRenderer;
+    private AnimationState _animState;
+    private int _currentState;
+    private float _LockedTimer;
     private static readonly int Anim_Idle = Animator.StringToHash("PlayerIdle");
     private static readonly int Anim_Walk = Animator.StringToHash("PlayerWalk");
     private static readonly int Anim_Jump = Animator.StringToHash("PlayerJump");
@@ -93,38 +106,35 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (direction.x < 0)
-        {
-            playerSpriteRenderer.flipX = true;
-        }
-        else if (direction.x > 0)
-        {
-            playerSpriteRenderer.flipX = false;
-        }
+        if (direction.x != 0) playerSpriteRenderer.flipX = direction.x < 0;
 
-        // NOTE: JAMIE - REPLACE ALL THIS WITH A STATE-BASED SYSTEM
-        if (playerRB.velocity.y > 0.2 && IsJumping == true)
-        {
-            playerAnimator.CrossFade(Anim_Jump, 0f, 0);
-            return;
-        }
-        else if (playerRB.velocity.y < 0.2 && IsGrounded == false)
-        {
-            playerAnimator.CrossFade(Anim_Fall, 0f, 0);
-            return;
-        }
-        else if (playerRB.velocity.x > 0.2 || playerRB.velocity.x < -0.2)
-        {
-            playerAnimator.CrossFade(Anim_Walk, 0, 0);
-            return;
-        }
-        else
-        {
-            playerAnimator.CrossFade(Anim_Idle, 0f, 0);
-        }
+        int state = GetAnimationState();
+        if(IsGrounded) IsJumping = false;
+        IsAttacking = false;
 
-        //Reset to Idle animation just in case these checks fail
+        if (state == _currentState) return;
+        playerAnimator.CrossFade(state, 0, 0);
+        _currentState = state;
     }
+
+    private int GetAnimationState()
+    {
+        if (Time.time < _LockedTimer) return _currentState;
+
+        // Firewall pattern priorities :: This will go down the list from most important to least important
+        if (IsAttacking) return LockAnimationState(Anim_Attack, 0.6f);
+        if (IsJumping) return Anim_Jump;
+        if (IsGrounded) return playerRB.velocity.x == 0 ? Anim_Idle : Anim_Walk;
+        return playerRB.velocity.y > 0 ? Anim_Jump : Anim_Fall;
+
+        int LockAnimationState(int s, float t)
+        {
+            _LockedTimer = Time.time + t;
+            return s;
+        }
+    }
+
+
 
     private void FixedUpdate()
     {
@@ -186,21 +196,24 @@ public class PlayerManager : MonoBehaviour
 
     private void HandleJumpCancel()
     {
-
+        return;
     }
 
     private void HandleAttack()
     {
-        //playerAnimator.CrossFade(Anim_Attack, 0, 0);
+        IsAttacking = true;
     }
-
+    
+    // Function stub for later development
     private void Interact()
     {
+        return;
     }
 
+    // Function stub for later development
     private void SwitchWeapon()
     {
-
+        return;
     }
     #endregion
 
@@ -219,12 +232,6 @@ public class PlayerManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         IsJumping = false;
     }
-
-    // THIS FUNCTION IS ONLY HERE FOR DEBUG TESTING OF THE GROUND CHECK, TO REMOVE LATER
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawCube(new Vector2(playerCollider.bounds.center.x, playerCollider.bounds.min.y + -0.3f), new Vector3(0.75f, 0.5f, 0.1f));
-    //}
 
     #endregion
 }

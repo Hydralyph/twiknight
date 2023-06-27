@@ -68,6 +68,7 @@ public class InputManager : ScriptableObject, ControlScheme.IGameplayActions, Co
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        if(context.phase == InputActionPhase.Canceled)
         AttackEvent?.Invoke();
     }
 
