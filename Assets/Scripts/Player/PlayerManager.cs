@@ -191,7 +191,7 @@ public class PlayerManager : MonoBehaviour
 
     private void HandleAttack()
     {
-        playerAnimator.CrossFade(Anim_Attack, 0, 0);
+        //playerAnimator.CrossFade(Anim_Attack, 0, 0);
     }
 
     private void Interact()
