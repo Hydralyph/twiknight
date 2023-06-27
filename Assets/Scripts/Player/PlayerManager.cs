@@ -1,3 +1,8 @@
+/*
+ * Author: Jamie Adaway
+ * Last Updated: 27/06/23 14:00
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -88,23 +93,6 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerRB.velocity.y > 0.2 && IsJumping == true)
-        {
-            playerAnimator.CrossFade(Anim_Jump, 0f, 0);
-        }
-        else if (playerRB.velocity.y < 0.2 && IsGrounded == false)
-        {
-            playerAnimator.CrossFade(Anim_Fall, 0f, 0);
-        }
-        else if (playerRB.velocity.x > 0.2 || playerRB.velocity.x < -0.2)
-        {
-            playerAnimator.CrossFade(Anim_Walk, 0, 0);
-        }
-        else
-        {
-            playerAnimator.CrossFade(Anim_Idle, 0f, 0);
-        }
-
         if (direction.x < 0)
         {
             playerSpriteRenderer.flipX = true;
@@ -114,16 +102,33 @@ public class PlayerManager : MonoBehaviour
             playerSpriteRenderer.flipX = false;
         }
 
+        // NOTE: JAMIE - REPLACE ALL THIS WITH A STATE-BASED SYSTEM
+        if (playerRB.velocity.y > 0.2 && IsJumping == true)
+        {
+            playerAnimator.CrossFade(Anim_Jump, 0f, 0);
+            return;
+        }
+        else if (playerRB.velocity.y < 0.2 && IsGrounded == false)
+        {
+            playerAnimator.CrossFade(Anim_Fall, 0f, 0);
+            return;
+        }
+        else if (playerRB.velocity.x > 0.2 || playerRB.velocity.x < -0.2)
+        {
+            playerAnimator.CrossFade(Anim_Walk, 0, 0);
+            return;
+        }
+        else
+        {
+            playerAnimator.CrossFade(Anim_Idle, 0f, 0);
+        }
+
         //Reset to Idle animation just in case these checks fail
     }
 
     private void FixedUpdate()
     {
         CheckGrounded();
-        if (IsGrounded == true)
-        {
-            IsJumping = false;
-        }
         desiredMoveVelocity = new Vector2(direction.x, 0f) * Mathf.Max(maxSpeed, 0f);
 
         // IS GROUNDED CHECK?
@@ -175,13 +180,8 @@ public class PlayerManager : MonoBehaviour
 
             moveVelocity.y += jumpSpeed;
             playerRB.velocity = moveVelocity;
-
-        } else if(IsGrounded == false || IsJumping == true)
-        {
-            // DO NOTHING
+            StartCoroutine(TempDisableJumpReset());
         }
-
-        
     }
 
     private void HandleJumpCancel()
@@ -191,8 +191,7 @@ public class PlayerManager : MonoBehaviour
 
     private void HandleAttack()
     {
-        //playerAnimator.CrossFade(Anim_Attack, 0, 0);
-        CanMove = !CanMove;
+        playerAnimator.CrossFade(Anim_Attack, 0, 0);
     }
 
     private void Interact()
@@ -207,10 +206,18 @@ public class PlayerManager : MonoBehaviour
 
     #region Misc Functions
 
+    // CheckGrounded(): This checks ground by using the OverlapBox method, pretty much spawning a box collider temporarily
     private void CheckGrounded()
     {
         IsGrounded = Physics2D.OverlapBox(new Vector2(playerCollider.bounds.center.x, playerCollider.bounds.min.y + -0.3f), new Vector2(0.75f, 0.5f), 0f, collidableGround);
         // TODO: Fix this later, with either an overlap circle or Boxcast || https://www.youtube.com/watch?v=c3iEl5AwUF8d
+    }
+
+    // TempDisableJumpReset() : This temporarily disables the resetting of IsJumping due to issues with the animation states
+    IEnumerator TempDisableJumpReset()
+    {
+        yield return new WaitForSeconds(0.5f);
+        IsJumping = false;
     }
 
     // THIS FUNCTION IS ONLY HERE FOR DEBUG TESTING OF THE GROUND CHECK, TO REMOVE LATER
