@@ -86,17 +86,6 @@ public partial class @ControlScheme: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""8d76946f-0b84-4f3f-b6fd-24ff25b4e3f2"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""down"",
                     ""id"": ""c811060e-6386-4d5f-ace8-3044d7ea253a"",
                     ""path"": ""<Keyboard>/s"",
@@ -143,7 +132,7 @@ public partial class @ControlScheme: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e6843ad6-d158-426a-a95c-9b845c6c8ba0"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
