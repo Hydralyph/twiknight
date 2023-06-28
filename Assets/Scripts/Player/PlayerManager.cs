@@ -69,7 +69,7 @@ public class PlayerManager : MonoBehaviour
 
     // Todo: Add a <Weapon> List, after creating the Weapon class (maybe scriptable object?)
     //private int currentWeapon; // Note: Could potentially hash these instead, check first watch later video
-    //private int livesLeft;
+    [SerializeField] public int PlayerLives { get; private set; } = 3;
     //private int movementSkillLevel = 1;
     //private int attackSkillLevel = 1;
 
@@ -218,6 +218,12 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     #region Misc Functions
+
+    // TakeDamage(): This is ran when an enemy or damaging tile is hit. Takes one from PlayerLives and plays the oneshot Damage animation
+    private void TakeDamage()
+    {
+        PlayerLives -= 1;
+    }
 
     // CheckGrounded(): This checks ground by using the OverlapBox method, pretty much spawning a box collider temporarily
     private void CheckGrounded()
