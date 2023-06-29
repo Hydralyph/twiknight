@@ -24,15 +24,6 @@ public class PlayerManager : MonoBehaviour
     private bool IsAttacking { get; set; }
     private bool IsGrounded { get; set; }
 
-    enum AnimationState
-    {
-        Idle,
-        Walk,
-        Jump,
-        Fall,
-        Attack
-    }
-
     // Velocity/Movement Variables
     [SerializeField, Range(0f, 100f)] private float maxSpeed = 4f;
     [SerializeField, Range(0f, 100f)] private float maxAccel = 35f;
@@ -54,11 +45,11 @@ public class PlayerManager : MonoBehaviour
     private Camera playerCamera;
     private Rigidbody2D playerRB;
     private BoxCollider2D playerCollider;
-    
+    public int PlayerLives { get; private set; } = 4;
+
     // Animator variables
     private Animator playerAnimator;
     [SerializeField] private SpriteRenderer playerSpriteRenderer;
-    private AnimationState _animState;
     private int _currentState;
     private float _LockedTimer;
     private static readonly int Anim_Idle = Animator.StringToHash("PlayerIdle");
@@ -67,9 +58,12 @@ public class PlayerManager : MonoBehaviour
     private static readonly int Anim_Fall = Animator.StringToHash("PlayerFall");
     private static readonly int Anim_Attack = Animator.StringToHash("PlayerAttack");
 
+    // Audio Variables
+    private AudioSource playerAudioSource;
+    [SerializeField] private AudioClip[] audioClips;
+
     // Todo: Add a <Weapon> List, after creating the Weapon class (maybe scriptable object?)
     //private int currentWeapon; // Note: Could potentially hash these instead, check first watch later video
-    [SerializeField] public int PlayerLives { get; private set; } = 3;
     //private int movementSkillLevel = 1;
     //private int attackSkillLevel = 1;
 
@@ -95,6 +89,7 @@ public class PlayerManager : MonoBehaviour
         playerRB = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponentInParent<Animator>();
+        playerAudioSource = playerRB.GetComponent<AudioSource>();
         
 
         inputManager.MoveEvent += HandleMovement;
@@ -115,6 +110,7 @@ public class PlayerManager : MonoBehaviour
         if (state == _currentState) return;
         playerAnimator.CrossFade(state, 0, 0);
         _currentState = state;
+
     }
 
     private int GetAnimationState()
@@ -161,18 +157,13 @@ public class PlayerManager : MonoBehaviour
             playerRB.gravityScale = defaultGravityScale;
         }
 
-        if(CanMove == false)
-        {
-            playerRB.velocity = new Vector2(0, moveVelocity.y);
-            return;
-        }
-
         playerRB.velocity = moveVelocity;
     }
 
     #region EventHandlers
     private void HandleMovement(Vector2 dir)
     {
+        if (CanMove == false) return;
         direction.x = dir.x;
     }
 
@@ -220,9 +211,11 @@ public class PlayerManager : MonoBehaviour
     #region Misc Functions
 
     // TakeDamage(): This is ran when an enemy or damaging tile is hit. Takes one from PlayerLives and plays the oneshot Damage animation
-    private void TakeDamage()
+    public void TakeDamage()
     {
+        playerAudioSource.PlayOneShot(audioClips[0]);
         PlayerLives -= 1;
+        PlayerLives = Math.Clamp(PlayerLives, 0, 3);
     }
 
     // CheckGrounded(): This checks ground by using the OverlapBox method, pretty much spawning a box collider temporarily
