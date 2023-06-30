@@ -23,6 +23,7 @@ public class PlayerManager : MonoBehaviour
     private bool IsJumping { get; set; }
     private bool IsAttacking { get; set; }
     private bool IsGrounded { get; set; }
+    private bool EnemyInRange { get; set; }
 
     // Velocity/Movement Variables
     [SerializeField, Range(0f, 100f)] private float maxSpeed = 4f;
@@ -42,6 +43,7 @@ public class PlayerManager : MonoBehaviour
 
     // Misc Variables
     [SerializeField] private LayerMask collidableGround;
+    [SerializeField] private LayerMask Damageable;
     private Camera playerCamera;
     private Rigidbody2D playerRB;
     private BoxCollider2D playerCollider;
@@ -135,6 +137,7 @@ public class PlayerManager : MonoBehaviour
     private void FixedUpdate()
     {
         CheckGrounded();
+        CheckEnemyInRange();
         desiredMoveVelocity = new Vector2(direction.x, 0f) * Mathf.Max(maxSpeed, 0f);
 
         // IS GROUNDED CHECK?
@@ -193,6 +196,21 @@ public class PlayerManager : MonoBehaviour
     private void HandleAttack()
     {
         IsAttacking = true;
+
+        if(EnemyInRange == true)
+        {
+            Collider2D[] colliders;
+            if (playerSpriteRenderer.flipX == false) colliders = Physics2D.OverlapBoxAll(new Vector2(playerCollider.bounds.max.x + 1f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
+            else colliders = Physics2D.OverlapBoxAll(new Vector2(playerCollider.bounds.min.x - 1f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
+
+
+            foreach(Collider2D col in colliders)
+            {
+                col.gameObject.SendMessage("TakeDamage");
+            }
+        }
+
+        EnemyInRange = false;
     }
     
     // Function stub for later development
@@ -225,6 +243,13 @@ public class PlayerManager : MonoBehaviour
         // TODO: Fix this later, with either an overlap circle or Boxcast || https://www.youtube.com/watch?v=c3iEl5AwUF8d
     }
 
+    private void CheckEnemyInRange()
+    {
+        if (playerSpriteRenderer.flipX == false) EnemyInRange = Physics2D.OverlapBox(new Vector2(playerCollider.bounds.max.x + 1f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
+        else EnemyInRange = Physics2D.OverlapBox(new Vector2(playerCollider.bounds.min.x - 1.5f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
+
+    }
+
     // TempDisableJumpReset() : This temporarily disables the resetting of IsJumping due to issues with the animation states
     IEnumerator TempDisableJumpReset()
     {
@@ -233,4 +258,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     #endregion
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawCube(new Vector3(playerCollider.bounds.max.x + 1f, playerCollider.bounds.center.y, 0f), new Vector3(2f, 2f, 0f));
+    //    Gizmos.DrawCube(new Vector3(playerCollider.bounds.min.x - 1f, playerCollider.bounds.center.y, 0f), new Vector3(2f, 2f, 0f));
+
+    //}
 }

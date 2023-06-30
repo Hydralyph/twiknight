@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour
 
     // Audio Variables
     private AudioSource enemyAudioSource;
-    [SerializeField] private AudioClip[] audioClips;
+    [SerializeField] private AudioClip hurtSFX;
 
 
     // Start is called before the first frame update
@@ -43,6 +43,7 @@ public class EnemyController : MonoBehaviour
         enemyRB = GetComponent<Rigidbody2D>();
         enemyCollider = GetComponent<BoxCollider2D>();
         enemyAnimator = GetComponent<Animator>();
+        enemyAudioSource = GetComponent<AudioSource>();
 
         CanAttack = true;
     }
@@ -50,11 +51,11 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         int state = GetAnimationState();
-        IsAttacking = false;
 
         if (state == _currentState) return;
         enemyAnimator.CrossFade(state, 0, 0);
         _currentState = state;
+        IsAttacking = false;
     }
 
     private void FixedUpdate()
@@ -86,7 +87,6 @@ public class EnemyController : MonoBehaviour
     // AttackWaitTimer() : Gives a delay to the enemies attack ability, stopping instant full health loss upon attack
     IEnumerator AttackWaitTimer()
     {
-        IsAttacking = false;
         yield return new WaitForSeconds(2f);
         CanAttack = true;
         StopCoroutine(AttackWaitTimer());
@@ -98,7 +98,7 @@ public class EnemyController : MonoBehaviour
         CanMove = true;
 
         // Firewall pattern priorities :: This will go down the list from most important to least important
-        if (IsAttacking) return LockAnimationState(Anim_Attack, 0.6f);
+        if (IsAttacking) return LockAnimationState(Anim_Attack, 1f);
         return enemyRB.velocity.x == 0 ? Anim_Idle : Anim_Walk;
 
         int LockAnimationState(int s, float t)
@@ -111,8 +111,17 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage()
     {
-        enemyAudioSource.PlayOneShot(audioClips[0]);
-        Destroy(this);
+        //enemyAudioSource.PlayOneShot(hurtSFX);
+        StartCoroutine(WaitForDeath());
+    }
+
+    IEnumerator WaitForDeath()
+    {
+        CanAttack = false;
+        CanMove = false;
+        yield return new WaitForSeconds(0.5f);
+        Destroy(this.gameObject);
+        StopCoroutine(WaitForDeath());
     }
 
     //private void OnDrawGizmos()
