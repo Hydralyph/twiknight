@@ -97,9 +97,9 @@ GameObject:
   - component: {fileID: 5316877828759738536}
   - component: {fileID: 6379062036639820689}
   - component: {fileID: 195432879}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy_Skeleton
-  m_TagString: Player
+  m_TagString: Enemies
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -205,5 +205,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   enemyType: 0
-  audioClips:
-  - {fileID: 8300000, guid: 5ac3bd930ca144afdb001d5452420c9f, type: 3}
+  hurtSFX: {fileID: 8300000, guid: 5ac3bd930ca144afdb001d5452420c9f, type: 3}
