@@ -111,7 +111,6 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage()
     {
-        //enemyAudioSource.PlayOneShot(hurtSFX);
         StartCoroutine(WaitForDeath());
     }
 
@@ -119,7 +118,9 @@ public class EnemyController : MonoBehaviour
     {
         CanAttack = false;
         CanMove = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.40f);
+        enemyAudioSource.PlayOneShot(hurtSFX);
+        yield return new WaitForSeconds(0.2f);
         Destroy(this.gameObject);
         StopCoroutine(WaitForDeath());
     }
