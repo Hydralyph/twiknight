@@ -19,11 +19,15 @@ public class Move : MonoBehaviour
     private float maxSpeedChange;
     private float acceleration;
     private bool onGround;
+    // Kallum adding code for inventory
+    private Inventory inventory;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         ground = GetComponent<Ground>();
+        // Kallum adding code for inventory
+        inventory = new Inventory();
     }
 
     // Update is called once per frame
