@@ -22,6 +22,8 @@ public class InventoryManager : MonoBehaviour
         // if statement to check for input button i
         if (Input.GetButtonDown("Inventory") && menuActivated)
         {
+            //paused time deactived
+            Time.timeScale = 1;
             // Deactivates Menu
             InventoryMenu.SetActive(false);
             menuActivated = false;
@@ -31,8 +33,17 @@ public class InventoryManager : MonoBehaviour
         else if (Input.GetButtonDown("Inventory") && !menuActivated)
         {
             // Activates menu 
+            //pauses game time and physics
+            Time.timeScale = 0;
             InventoryMenu.SetActive(true);
             menuActivated = true;
         }
+    }
+
+    //creating new method for Add item and telling ti what items in brackets is coming into it
+    public void AddItem(string itemName, int quantity, Sprite itemSprite)
+    {
+        //to test it to make sure its working adding debug here
+        Debug.Log("itemName = " + itemName + "quantity = " + quantity + "itemSprite = " + itemSprite);
     }
 }
