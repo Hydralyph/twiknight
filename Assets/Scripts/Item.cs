@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Item : MonoBehaviour
 {
     //dont want other scripts editing this and causeing bugs
     [SerializeField]
