@@ -59,15 +59,13 @@ public class PlayerManager : MonoBehaviour
     private static readonly int Anim_Jump = Animator.StringToHash("PlayerJump");
     private static readonly int Anim_Fall = Animator.StringToHash("PlayerFall");
     private static readonly int Anim_Attack = Animator.StringToHash("PlayerAttack");
-    //kallum adding inventory
-    private Inventory inventory;
+    
 
     // Audio Variables
     private AudioSource playerAudioSource;
     [SerializeField] private AudioClip[] audioClips;
 
-    // kallum adding inventory
-    [SerializeField] private UI_Inventory uiInventory;
+
 
     // Todo: Add a <Weapon> List, after creating the Weapon class (maybe scriptable object?)
     //private int currentWeapon; // Note: Could potentially hash these instead, check first watch later video
@@ -80,6 +78,7 @@ public class PlayerManager : MonoBehaviour
 
     void Awake()
     {
+        
         if (playerManager == null)
         {
             playerManager = this;
@@ -94,12 +93,7 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    void onAwake()
-    {
-        // kallum adding inventory
-        inventory = new Inventory();
-        uiInventory.SetInventory(inventory);
-    }
+  
 
     private void Start()
     {
@@ -113,6 +107,8 @@ public class PlayerManager : MonoBehaviour
         inputManager.JumpEvent += HandleJump;
         inputManager.JumpCancelledEvent += HandleJumpCancel;
         inputManager.AttackEvent += HandleAttack;
+
+       
     }
 
     // Update is called once per frame
