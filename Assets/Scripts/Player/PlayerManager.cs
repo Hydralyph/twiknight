@@ -66,6 +66,9 @@ public class PlayerManager : MonoBehaviour
     private AudioSource playerAudioSource;
     [SerializeField] private AudioClip[] audioClips;
 
+    // kallum adding inventory
+    [SerializeField] private UI_Inventory uiInventory;
+
     // Todo: Add a <Weapon> List, after creating the Weapon class (maybe scriptable object?)
     //private int currentWeapon; // Note: Could potentially hash these instead, check first watch later video
     //private int movementSkillLevel = 1;
@@ -73,6 +76,8 @@ public class PlayerManager : MonoBehaviour
 
 
     // Start is called before the first frame update
+
+
     void Awake()
     {
         if (playerManager == null)
@@ -86,8 +91,14 @@ public class PlayerManager : MonoBehaviour
 
         defaultGravityScale = 1f;
         CanMove = true;
+
+    }
+
+    void onAwake()
+    {
         // kallum adding inventory
         inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
     }
 
     private void Start()
