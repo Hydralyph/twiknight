@@ -489,7 +489,7 @@ InputManager:
     m_Name: Inventory
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
+    negativeButton: i
     positiveButton: i
     altNegativeButton: 
     altPositiveButton: 
