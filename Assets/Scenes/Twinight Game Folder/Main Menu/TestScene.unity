@@ -67197,18 +67197,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 606674982}
     m_Modifications:
-    - target: {fileID: 8000426251338426096, guid: 9cb9e7027dde4fd449e78bd54f2ac56a, type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8000426251517814222, guid: 9cb9e7027dde4fd449e78bd54f2ac56a, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 4b43781ca8576094bb87e316bbc0c8cc, type: 3}
-    - target: {fileID: 8000426251517814222, guid: 9cb9e7027dde4fd449e78bd54f2ac56a, type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8000426252892888916, guid: 9cb9e7027dde4fd449e78bd54f2ac56a, type: 3}
       propertyPath: m_Name
       value: ItemSlot

@@ -5,8 +5,10 @@ using UnityEngine;
 using TMPro;
 // Ui interaction
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ItemSlot : MonoBehaviour
+// adding feature that when object is clicked it knows its being clicked
+public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
 {
 
@@ -27,6 +29,18 @@ public class ItemSlot : MonoBehaviour
     [SerializeField] // will show image in slot
     private Image itemImage;
 
+    //reference to game data for shader we want to turn on and that the item has been selected
+    public GameObject selectedShader;
+    public bool thisItemSelected;
+
+    //call to turn all slots off this script talks to inventory manager script
+    private InventoryManager inventoryManager;
+    // talks to inventory manager script
+    private void Start()
+    {
+        inventoryManager = GameObject.Find("Canvas").GetComponent<InventoryManager>();
+    }
+
     // custom method saying its going to be recieving information about item name quantity and item sprite info
     public void AddItem(string itemName, int quantity, Sprite itemSprite)
     {
@@ -44,4 +58,33 @@ public class ItemSlot : MonoBehaviour
         itemImage.sprite = itemSprite;
 }
 
+    // when item is clicked it will call what is in On Pointer Click
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        //allows us to detect when the left mouse button has been clicked
+        if(eventData.button == PointerEventData.InputButton.Left)
+        {
+            //if it is LEFT it will do this
+            OnLeftClick();
+        }
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            //if it is RIGHT it will do this
+            OnRightClick();
+        }
+    }
+
+    //what happens on a new click
+    public void OnLeftClick()
+    {
+        inventoryManager.DeselectAllSlots(); // when left click on something tells it to deslect all other slots and turn this on
+        //call to turn all slots off
+        selectedShader.SetActive(true); // turns on shader
+        thisItemSelected = true;
+    }
+
+    public void OnRightClick()
+    {
+        
+    }
 }

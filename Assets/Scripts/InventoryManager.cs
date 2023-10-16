@@ -9,9 +9,9 @@ public class InventoryManager : MonoBehaviour
     public GameObject InventoryMenu;
     //private bool to keep track if the menu is on or off
     private bool menuActivated;
-    //for item slots can be adjusted between the array []
+    //for item slots can be adjusted between the array [] has array for all slots
     public ItemSlot[] itemSlot;
-
+    
 
     //Start is called before the first frame update
     void Start()
@@ -60,5 +60,17 @@ public class InventoryManager : MonoBehaviour
             }
         }
         
+    }
+
+    // command to deselect all slots selected in inventory
+    public void DeselectAllSlots()
+    {
+        for (int i = 0; i < itemSlot.Length; i++)
+        {
+            // each item slot it comes across will set as unactive
+            itemSlot[i].selectedShader.SetActive(false);
+            //letting it know the slots are no longer active
+            itemSlot[i].thisItemSelected = false;
+        }
     }
 }
