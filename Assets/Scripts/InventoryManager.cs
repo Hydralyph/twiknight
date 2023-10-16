@@ -44,7 +44,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     //creating new method for Add item and telling ti what items in brackets is coming into it
-    public void AddItem(string itemName, int quantity, Sprite itemSprite)
+    public void AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription)
     {
         //to test it to make sure its working adding debug here
         // Debug.Log("itemName = " + itemName + "quantity = " + quantity + "itemSprite = " + itemSprite);
@@ -55,7 +55,7 @@ public class InventoryManager : MonoBehaviour
             //checking for each slot if that item slot if it NOT full, if not will tell it add that info
          if (itemSlot[i].isFull == false)
             {
-                itemSlot[i].AddItem(itemName, quantity, itemSprite);
+                itemSlot[i].AddItem(itemName, quantity, itemSprite, itemDescription);
         return; 
             }
         }

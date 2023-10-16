@@ -14,6 +14,9 @@ public class Item : MonoBehaviour
     [SerializeField]
     private Sprite sprite;
 
+    [TextArea] // adds item description for UI component for items
+    [SerializeField]
+    private string itemDescription;
 
     //script to talk to inventory
     private InventoryManager inventoryManager;
@@ -32,7 +35,7 @@ public class Item : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             //talks to inventory manager. add item with qualnity name and sprite and destroys that game object
-            inventoryManager.AddItem(itemName, quantity, sprite);
+            inventoryManager.AddItem(itemName, quantity, sprite, itemDescription);
             Destroy(gameObject);
 
         }
