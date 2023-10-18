@@ -19,11 +19,13 @@ public class Move : MonoBehaviour
     private float maxSpeedChange;
     private float acceleration;
     private bool onGround;
+   
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         ground = GetComponent<Ground>();
+      
     }
 
     // Update is called once per frame

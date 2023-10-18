@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+//kallum best 2023 270116003
+
 
 public class PauseMenu : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class PauseMenu : MonoBehaviour
         {
             if (GameIsPaused)
             {
+                
+
                 AudioSource[] audios = FindObjectsOfType<AudioSource>();
                 foreach (AudioSource a in audios)
                 {

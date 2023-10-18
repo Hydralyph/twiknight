@@ -17,7 +17,7 @@ public class PlayerManager : MonoBehaviour
     // Class References
     public static PlayerManager playerManager;
     [SerializeField] private InputManager inputManager;
-    
+
     // Player Properties
     public bool CanMove { get; set; }
     private bool IsJumping { get; set; }
@@ -59,10 +59,13 @@ public class PlayerManager : MonoBehaviour
     private static readonly int Anim_Jump = Animator.StringToHash("PlayerJump");
     private static readonly int Anim_Fall = Animator.StringToHash("PlayerFall");
     private static readonly int Anim_Attack = Animator.StringToHash("PlayerAttack");
+    
 
     // Audio Variables
     private AudioSource playerAudioSource;
     [SerializeField] private AudioClip[] audioClips;
+
+
 
     // Todo: Add a <Weapon> List, after creating the Weapon class (maybe scriptable object?)
     //private int currentWeapon; // Note: Could potentially hash these instead, check first watch later video
@@ -71,12 +74,15 @@ public class PlayerManager : MonoBehaviour
 
 
     // Start is called before the first frame update
+
+
     void Awake()
     {
-        if(playerManager == null)
+        
+        if (playerManager == null)
         {
             playerManager = this;
-        } 
+        }
         else
         {
             Destroy(this.gameObject);
@@ -84,7 +90,10 @@ public class PlayerManager : MonoBehaviour
 
         defaultGravityScale = 1f;
         CanMove = true;
+
     }
+
+  
 
     private void Start()
     {
@@ -92,12 +101,14 @@ public class PlayerManager : MonoBehaviour
         playerCollider = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponentInParent<Animator>();
         playerAudioSource = playerRB.GetComponent<AudioSource>();
-        
+
 
         inputManager.MoveEvent += HandleMovement;
         inputManager.JumpEvent += HandleJump;
         inputManager.JumpCancelledEvent += HandleJumpCancel;
         inputManager.AttackEvent += HandleAttack;
+
+       
     }
 
     // Update is called once per frame
@@ -106,7 +117,7 @@ public class PlayerManager : MonoBehaviour
         if (direction.x != 0) playerSpriteRenderer.flipX = direction.x < 0;
 
         int state = GetAnimationState();
-        if(IsGrounded) IsJumping = false;
+        if (IsGrounded) IsJumping = false;
         IsAttacking = false;
 
         if (state == _currentState) return;
@@ -172,12 +183,12 @@ public class PlayerManager : MonoBehaviour
 
     private void HandleJump()
     {
-        if(IsJumping == false && IsGrounded == true)
+        if (IsJumping == false && IsGrounded == true)
         {
             IsJumping = true;
             float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
 
-            if(moveVelocity.y > 0f)
+            if (moveVelocity.y > 0f)
             {
                 jumpSpeed = Mathf.Max(jumpSpeed - moveVelocity.y, 0f);
             }
@@ -197,14 +208,14 @@ public class PlayerManager : MonoBehaviour
     {
         IsAttacking = true;
 
-        if(EnemyInRange == true)
+        if (EnemyInRange == true)
         {
             Collider2D[] colliders;
             if (playerSpriteRenderer.flipX == false) colliders = Physics2D.OverlapBoxAll(new Vector2(playerCollider.bounds.max.x + 1f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
             else colliders = Physics2D.OverlapBoxAll(new Vector2(playerCollider.bounds.min.x - 1f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
 
 
-            foreach(Collider2D col in colliders)
+            foreach (Collider2D col in colliders)
             {
                 col.gameObject.SendMessage("TakeDamage");
             }
@@ -212,7 +223,7 @@ public class PlayerManager : MonoBehaviour
 
         EnemyInRange = false;
     }
-    
+
     // Function stub for later development
     private void Interact()
     {
@@ -265,4 +276,5 @@ public class PlayerManager : MonoBehaviour
     //    Gizmos.DrawCube(new Vector3(playerCollider.bounds.min.x - 1f, playerCollider.bounds.center.y, 0f), new Vector3(2f, 2f, 0f));
 
     //}
+
 }
