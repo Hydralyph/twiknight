@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
 
     public int maxHealth = 3; // max enemy health
     public int currentHealth;
+    public Sprite portrait;
     // Start is called before the first frame update
     void Start()
     {
