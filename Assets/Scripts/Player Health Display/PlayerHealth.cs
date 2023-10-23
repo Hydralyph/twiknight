@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ItemSO;
 using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerHealth : MonoBehaviour
@@ -20,10 +21,12 @@ public class PlayerHealth : MonoBehaviour
         health = maxHealth;   // start game full health
     }
 
-    public void ChangeHealth(int amount)
-    {
-        
-    }
+    public void ChangeHealth(int amountToChangeStat)
+     {
+       amountToChangeStat = 5;
+     }
+   
+
 
     public void TakeDamage(int amount) // function called anytime player takes damage and amount
     {
