@@ -29,10 +29,10 @@ public class ItemSO : ScriptableObject
    
     public void UseItem()
    {
-     //  if(statToChange == StatToChange.health)
-     //   {
-     //      GameObject.Find("healthManager").GetComponent<PlayerHealth>().ChangeHealth(amountToChangeStat);
-     //   }
+       if(statToChange == StatToChange.health)
+       {
+           GameObject.Find("PlayerHealth").GetComponent<PlayerHealth>().ChangeHealth(amountToChangeStat);
+        }
    }
 
 
