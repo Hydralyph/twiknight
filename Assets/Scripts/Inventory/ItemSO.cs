@@ -21,7 +21,7 @@ public class ItemSO : ScriptableObject
     // amount to change stat
     public int amountToChangeAttribute;
 
-
+    public int Heart;
 
 
     // how to use item
@@ -32,6 +32,7 @@ public class ItemSO : ScriptableObject
        if(statToChange == StatToChange.health)
        {
            GameObject.Find("Heart").GetComponent<PlayerHealth>().ChangeHealth(amountToChangeStat);
+            
         }
    }
 

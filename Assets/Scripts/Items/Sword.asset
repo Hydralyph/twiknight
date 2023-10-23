@@ -17,3 +17,4 @@ MonoBehaviour:
   amountToChangeStat: 1
   attributeToChange: 2
   amountToChangeAttribute: 1
+  Heart: 0

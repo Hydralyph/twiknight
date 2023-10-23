@@ -23,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void ChangeHealth(int amountToChangeStat)
      {
-       amountToChangeStat = 5;
+        health += amountToChangeStat;
      }
    
 
