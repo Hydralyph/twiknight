@@ -1,6 +1,8 @@
 /*
+ * Filename: PlayerManager.cs
  * Author: Jamie Adaway
- * Last Updated: 27/06/23 14:00
+ * Last Updated: 18/10/23 12:26
+ * Desc: Single file Script for handling all player features: Input; Animation; Data etc.
  */
 
 using System;
@@ -20,6 +22,7 @@ public class PlayerManager : MonoBehaviour
 
     // Player Properties
     public bool CanMove { get; set; }
+    public bool CanAttack { get; set; }
     private bool IsJumping { get; set; }
     private bool IsAttacking { get; set; }
     private bool IsGrounded { get; set; }
@@ -72,14 +75,10 @@ public class PlayerManager : MonoBehaviour
     //private int movementSkillLevel = 1;
     //private int attackSkillLevel = 1;
 
-
-    // Start is called before the first frame update
-
-
     void Awake()
     {
-        
-        if (playerManager == null)
+        // Keep this class a single instance class (singleton)
+        if(playerManager == null)
         {
             playerManager = this;
         }
@@ -114,11 +113,10 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Set the players horizontal sprite direction
         if (direction.x != 0) playerSpriteRenderer.flipX = direction.x < 0;
-
         int state = GetAnimationState();
-        if (IsGrounded) IsJumping = false;
-        IsAttacking = false;
+        if(IsGrounded) IsJumping = false;
 
         if (state == _currentState) return;
         playerAnimator.CrossFade(state, 0, 0);
@@ -126,16 +124,22 @@ public class PlayerManager : MonoBehaviour
 
     }
 
+    // Checks if the AnimationState is locked, otherwise use a Firewall pattern to determine current player state for Animation
     private int GetAnimationState()
     {
         if (Time.time < _LockedTimer) return _currentState;
 
         // Firewall pattern priorities :: This will go down the list from most important to least important
-        if (IsAttacking) return LockAnimationState(Anim_Attack, 0.6f);
+        if (IsAttacking)
+        {
+            IsAttacking = false;
+            return LockAnimationState(Anim_Attack, 0.6f);
+        }
         if (IsJumping) return Anim_Jump;
-        if (IsGrounded) return playerRB.velocity.x == 0 ? Anim_Idle : Anim_Walk;
-        return playerRB.velocity.y > 0 ? Anim_Jump : Anim_Fall;
+        if (IsGrounded) return playerRB.velocity.x == 0 ? LockAnimationState(Anim_Idle, 0.15f) : LockAnimationState(Anim_Walk, 0.15f);
+        return playerRB.velocity.y > 0 ? Anim_Jump : LockAnimationState(Anim_Fall, 0.15f);
 
+        // LockAnimationState() :: Takes an Animation hashed number and a time before allowing any animation change
         int LockAnimationState(int s, float t)
         {
             _LockedTimer = Time.time + t;
@@ -144,14 +148,13 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-
+    // Handle anything related to Physics or movement here
     private void FixedUpdate()
     {
         CheckGrounded();
         CheckEnemyInRange();
         desiredMoveVelocity = new Vector2(direction.x, 0f) * Mathf.Max(maxSpeed, 0f);
 
-        // IS GROUNDED CHECK?
         moveVelocity = playerRB.velocity;
 
         acceleration = IsGrounded ? maxAccel : maxAirAccel;
@@ -206,6 +209,7 @@ public class PlayerManager : MonoBehaviour
 
     private void HandleAttack()
     {
+        if (CanAttack == false) return;
         IsAttacking = true;
 
         if (EnemyInRange == true)
@@ -270,6 +274,7 @@ public class PlayerManager : MonoBehaviour
 
     #endregion
 
+    // OnDrawGizmos - For visibility when testing attack hitbox generations
     //private void OnDrawGizmos()
     //{
     //    Gizmos.DrawCube(new Vector3(playerCollider.bounds.max.x + 1f, playerCollider.bounds.center.y, 0f), new Vector3(2f, 2f, 0f));

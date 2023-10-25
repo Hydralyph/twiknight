@@ -21,6 +21,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue (Dialogue dialogue)
     {
+        PlayerManager.playerManager.CanAttack = false;
         animator.SetBool("isOpen", true);
         
         Debug.Log("Starting conversation with " + dialogue.name);
@@ -64,6 +65,7 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
+        PlayerManager.playerManager.CanAttack = true;
         Debug.Log("End of conversation");
         animator.SetBool("isOpen", false);
     }

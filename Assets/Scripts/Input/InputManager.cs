@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// Creates a menu item in the Asset Creation menu for simpler access
 [CreateAssetMenu(menuName = "TwiKnight", fileName ="InputManager")]
 public class InputManager : ScriptableObject, ControlScheme.IGameplayActions, ControlScheme.IUserInterfaceActions
 {
     private ControlScheme _controlScheme;
 
+    // InputManager.OnEnable() :: Check if the ControlScheme (keymap) exists, otherwise create and link a new one. Setting the GameplayMap active allows specific keybinds to send events.
     private void OnEnable()
     {
         if(_controlScheme == null)
@@ -34,6 +36,7 @@ public class InputManager : ScriptableObject, ControlScheme.IGameplayActions, Co
         _controlScheme.UserInterface.Enable();
     }
 
+    // Events for accessing keypress data
     public event Action<Vector2> MoveEvent;
     public event Action JumpEvent;
     public event Action JumpCancelledEvent;
