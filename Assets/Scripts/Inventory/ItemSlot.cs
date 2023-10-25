@@ -76,6 +76,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         {
             //if it is LEFT it will do this
             OnLeftClick();
+           
         }
         if (eventData.button == PointerEventData.InputButton.Right)
         {
@@ -87,6 +88,10 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     //what happens on a new click
     public void OnLeftClick()
     {
+
+        if (thisItemSelected) // if left click is double clicked items effect is applied
+            inventoryManager.UseItem(itemName);
+
         inventoryManager.DeselectAllSlots(); // when left click on something tells it to deslect all other slots and turn this on
         //call to turn all slots off
         selectedShader.SetActive(true); // turns on shader

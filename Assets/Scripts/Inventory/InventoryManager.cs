@@ -11,7 +11,10 @@ public class InventoryManager : MonoBehaviour
     private bool menuActivated;
     //for item slots can be adjusted between the array [] has array for all slots
     public ItemSlot[] itemSlot;
-    
+
+
+    public ItemSO[] itemSos;
+
 
     //Start is called before the first frame update
     void Start()
@@ -42,6 +45,19 @@ public class InventoryManager : MonoBehaviour
             menuActivated = true;
         }
     }
+
+    public void UseItem(string itemName)
+    {
+        for (int i = 0; i < itemSos.Length; i++)
+        {
+            if (itemSos[i].itemName == itemName)
+            {
+                itemSos[i].UseItem();
+            }
+        }
+    }
+
+
 
     //creating new method for Add item and telling ti what items in brackets is coming into it
     public void AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription)
