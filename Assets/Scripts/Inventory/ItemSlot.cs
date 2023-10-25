@@ -76,6 +76,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         {
             //if it is LEFT it will do this
             OnLeftClick();
+           
         }
         if (eventData.button == PointerEventData.InputButton.Right)
         {
