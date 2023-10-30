@@ -268,7 +268,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3575475154277919931, guid: a39048ffa6831e14c826145a0f0fb22c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a39048ffa6831e14c826145a0f0fb22c, type: 3}
 --- !u!1 &9913117
 GameObject:
@@ -11090,7 +11091,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialoguemanager: {fileID: 2053610812}
   dialoguetrigger: {fileID: 268484238}
-  testButton: {fileID: 192250157}
   testButton2: {fileID: 1106948743}
   twilightmanager: {fileID: 529495119}
 --- !u!114 &268484238
@@ -15815,7 +15815,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 486364492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 136.07, y: 0.46, z: 0}
+  m_LocalPosition: {x: 136.07, y: -64.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16360,7 +16360,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TALK
+  m_text: X to Talk
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0af6de0c48303eb4389554a5654ffb7c, type: 2}
   m_sharedMaterial: {fileID: -7061954744725388736, guid: 0af6de0c48303eb4389554a5654ffb7c, type: 2}
@@ -18088,7 +18088,7 @@ RectTransform:
   m_GameObject: {fileID: 573153255}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -4.38025}
-  m_LocalScale: {x: 1.37, y: 1.37, z: 1.37}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 186963819}
@@ -46102,7 +46102,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialoguemanager: {fileID: 2053610812}
   dialoguetrigger: {fileID: 849946477}
-  testButton: {fileID: 192250157}
   testButton2: {fileID: 1106948743}
   twilightmanager: {fileID: 529495119}
 --- !u!114 &849946477
@@ -51264,7 +51263,7 @@ RectTransform:
   m_GameObject: {fileID: 1106948743}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -4.38025}
-  m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 513063086}
@@ -51274,7 +51273,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 66.8736, y: 32.416687}
-  m_SizeDelta: {x: 92.7422, y: 30}
+  m_SizeDelta: {x: 180, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1111111362
 GameObject:
@@ -63081,7 +63080,7 @@ MonoBehaviour:
     - Hey mate, howzit going?
     - Yer one of them TwiKnight fellas aint ya? Could use yer services in our town.
     - Whaddya mean no? Bloody hell, jog on then.
-  dialogueManager: {fileID: 0}
+  dialogueManager: {fileID: 2053610812}
 --- !u!114 &1731087811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65473,7 +65472,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialoguemanager: {fileID: 570846307}
   dialoguetrigger: {fileID: 1827390053}
-  testButton: {fileID: 1731087808}
   testButton2: {fileID: 573153255}
 --- !u!1 &1831093659
 GameObject:
