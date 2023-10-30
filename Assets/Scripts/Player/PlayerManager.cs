@@ -221,7 +221,7 @@ public class PlayerManager : MonoBehaviour
 
             foreach (Collider2D col in colliders)
             {
-                col.gameObject.SendMessage("TakeDamage");
+                col.gameObject.SendMessage("TakeDamage", 1);
             }
         }
 
