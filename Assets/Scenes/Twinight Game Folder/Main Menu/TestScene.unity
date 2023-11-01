@@ -11048,10 +11048,10 @@ MonoBehaviour:
   dialogue:
     name: Dude Mans
     sentences:
-    - Oh, hello. I guess you are new around here?
-    - If you're looking for something, I think I saw some creatures down past the
-      bridge over yonder.
-    - Goodbye.
+    - '''Ello there, you must be one of ''em TwiKnight folks I hear so much about.'
+    - Some of 'em folks are reckonin' that some kinda curse has befallen us.
+    - I don't believe it one single bit, but if yer insistent on 'helping out'...
+    - I tend to hang around my shack just down the road 'ere.
   dialogueManager: {fileID: 2053610812}
 --- !u!61 &268484239
 BoxCollider2D:
@@ -17759,7 +17759,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &573153256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45914,9 +45914,13 @@ MonoBehaviour:
   dialogue:
     name: Village Lady
     sentences:
-    - Good day to you. Haven't seen you around here before.
-    - Not much to do in this village, but you can always keep exploring.
-    - have a good day.
+    - Oh my! Fancy seeing a knight in shining armor around these parts.
+    - Wait, you must be a TwiKnight! I thought you all had vanished!
+    - Hmm, well I have been hearing rumblings about a curse that will put us to sleep
+      forever...
+    - If you must save me, then come find me on my evening walks near the edge of
+      town.
+    - Head towards the bridge, and I'll stick out like a sore thumb!
   dialogueManager: {fileID: 2053610812}
 --- !u!61 &849946478
 BoxCollider2D:
@@ -59355,7 +59359,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1548460464
 RectTransform:
   m_ObjectHideFlags: 0
@@ -59365,7 +59369,7 @@ RectTransform:
   m_GameObject: {fileID: 1548460463}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1091775831}
@@ -59374,7 +59378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90.52185, y: 332}
+  m_AnchoredPosition: {x: 82, y: 445}
   m_SizeDelta: {x: 283.0482, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1548460465
