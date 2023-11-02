@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Twinight Game Folder/Main Menu/TestScene.unity
     guid: fdbc16972f793b44e9e0e4a81d0c6d8f
+  - enabled: 1
+    path: Assets/Scenes/Twinight Game Folder/Main Menu/TestScene Twilight.unity
+    guid: 422dd2ba68da5c14e8951693f31ba5c3
   - enabled: 0
     path: Assets/Scenes/Twinight Game Folder/Main Menu/Game.unity
     guid: f01bcd690c7482042ae74410c4dbdf47

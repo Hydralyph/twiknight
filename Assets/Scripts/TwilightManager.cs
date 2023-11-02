@@ -5,6 +5,7 @@ using UnityEngine;
 public class TwilightManager : MonoBehaviour
 {
     public int twilightcount;
+    public bool isTwilightActive;
     public GameObject twilightbutton;
 
     void Start()
@@ -19,6 +20,7 @@ public class TwilightManager : MonoBehaviour
         {
             Debug.Log("Twilight active");
             twilightbutton.SetActive(true);
+            isTwilightActive = true;
         }
     }
 }
