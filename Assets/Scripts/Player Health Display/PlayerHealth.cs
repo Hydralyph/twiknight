@@ -6,6 +6,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [SerializeField] GameObject YouDiedScreen;
     //keeps track of the players current health
     public int health;
     //how much health you have when you are at full health
@@ -35,6 +36,7 @@ public class PlayerHealth : MonoBehaviour
         {
             playerSr.enabled = false;
             playerManager.enabled = false;
+            YouDiedScreen.SetActive(true);
         }
     }
 }
