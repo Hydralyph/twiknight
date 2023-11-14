@@ -90,20 +90,41 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     {
 
         if (thisItemSelected) // if left click is double clicked items effect is applied
+        {
             inventoryManager.UseItem(itemName);
+           // this.quantity -= 1;
+           // quantityText.text = this.quantity.ToString(); // ToString converting numbber into text
+           // if (this.quantity <= 0)
+            //    EmptySlot();
+      
+        }
 
-        inventoryManager.DeselectAllSlots(); // when left click on something tells it to deslect all other slots and turn this on
-        //call to turn all slots off
-        selectedShader.SetActive(true); // turns on shader
-        thisItemSelected = true;
-        //change what data appears
-        ItemDescriptionNameText.text = itemName;
-        ItemDescriptionText.text = itemDescription;
-        itemDescriptionImage.sprite = itemSprite;
-        // makes sprite box empty if not selecting sprite
-        if (itemDescriptionImage.sprite == null)
-            itemDescriptionImage.sprite = emptySprite;
+        else
+        {
+            inventoryManager.DeselectAllSlots(); // when left click on something tells it to deslect all other slots and turn this on
+                                                 //call to turn all slots off
+            selectedShader.SetActive(true); // turns on shader
+            thisItemSelected = true;
+            //change what data appears
+            ItemDescriptionNameText.text = itemName;
+            ItemDescriptionText.text = itemDescription;
+            itemDescriptionImage.sprite = itemSprite;
+            // makes sprite box empty if not selecting sprite
+            if (itemDescriptionImage.sprite == null)
+                itemDescriptionImage.sprite = emptySprite;
+        }
     }
+
+    //private void EmptySlot()
+   // {
+        //nothing shows in slot or item description after used
+      //  quantityText.enabled = false;
+    //    itemImage.sprite = emptySprite;
+    //    //turning off
+    //    ItemDescriptionNameText.text = "";
+     ///   ItemDescriptionText.text = "";
+  //      itemDescriptionImage.sprite = emptySprite;
+  //  }
 
     public void OnRightClick()
     {
