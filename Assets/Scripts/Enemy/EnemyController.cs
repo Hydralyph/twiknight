@@ -72,7 +72,7 @@ public class EnemyController : MonoBehaviour
             {
                 CanAttack = false;
                 IsAttacking = true;
-                PlayerManager.playerManager.TakeDamage();
+                //PlayerManager.playerManager.TakeDamage();
                 StartCoroutine(AttackWaitTimer());
             }
         }

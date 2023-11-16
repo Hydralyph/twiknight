@@ -50,7 +50,7 @@ public class PlayerManager : MonoBehaviour
     private Camera playerCamera;
     private Rigidbody2D playerRB;
     private BoxCollider2D playerCollider;
-    public int PlayerLives { get; private set; } = 4;
+    //public int PlayerLives { get; private set; } = 4;
 
     // Animator variables
     private Animator playerAnimator;
@@ -107,7 +107,8 @@ public class PlayerManager : MonoBehaviour
         inputManager.JumpCancelledEvent += HandleJumpCancel;
         inputManager.AttackEvent += HandleAttack;
 
-       
+        CanMove = true;
+        CanAttack = true;
     }
 
     // Update is called once per frame
@@ -137,7 +138,7 @@ public class PlayerManager : MonoBehaviour
         }
         if (IsJumping) return Anim_Jump;
         if (IsGrounded) return playerRB.velocity.x == 0 ? LockAnimationState(Anim_Idle, 0.15f) : LockAnimationState(Anim_Walk, 0.15f);
-        return playerRB.velocity.y > 0 ? Anim_Jump : LockAnimationState(Anim_Fall, 0.15f);
+        return playerRB.velocity.y > 0 ? Anim_Jump : LockAnimationState(Anim_Fall, 0.25f);
 
         // LockAnimationState() :: Takes an Animation hashed number and a time before allowing any animation change
         int LockAnimationState(int s, float t)
@@ -244,12 +245,13 @@ public class PlayerManager : MonoBehaviour
     #region Misc Functions
 
     // TakeDamage(): This is ran when an enemy or damaging tile is hit. Takes one from PlayerLives and plays the oneshot Damage animation
-    public void TakeDamage()
-    {
-        playerAudioSource.PlayOneShot(audioClips[0]);
-        PlayerLives -= 1;
-        PlayerLives = Math.Clamp(PlayerLives, 0, 3);
-    }
+    // Note: This function might have been superceded by Kallums work
+    //public void TakeDamage()
+    //{
+    //    playerAudioSource.PlayOneShot(audioClips[0]);
+    //    PlayerLives -= 1;
+    //    PlayerLives = Math.Clamp(PlayerLives, 0, 3);
+    //}
 
     // CheckGrounded(): This checks ground by using the OverlapBox method, pretty much spawning a box collider temporarily
     private void CheckGrounded()

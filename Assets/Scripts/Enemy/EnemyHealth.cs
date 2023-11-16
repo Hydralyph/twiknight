@@ -8,6 +8,7 @@ public class EnemyHealth : MonoBehaviour
     public int maxHealth = 3; // max enemy health
     public int currentHealth;
     public Sprite portrait;
+    public AudioClip deathSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,8 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth -= amount;
         if(currentHealth <= 0)
-        { 
+        {
+            GetComponent<AudioSource>().PlayOneShot(deathSound);
             Destroy (gameObject);   
         }
     }
