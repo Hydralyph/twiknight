@@ -32,7 +32,8 @@ public class Item : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //checking to see if collision game object was in fact the player. 
-        if (collision.gameObject.tag == "Player")
+        // (Jamie) Note: Added a layer check for Player (Layer 7) due to the child hitbox for sword also picking up items
+        if (collision.gameObject.tag == "Player" && collision.gameObject.layer == 7)
         {
             //talks to inventory manager. add item with qualnity name and sprite and destroys that game object
             inventoryManager.AddItem(itemName, quantity, sprite, itemDescription);

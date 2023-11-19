@@ -35,7 +35,9 @@ public class PlayerHealth : MonoBehaviour
         if(health <= 0 ) // if the damage takes player to 0 the player is destroyed
         {
             playerSr.enabled = false;
-            playerManager.enabled = false;
+            //playerManager.enabled = false;
+            // (Jamie) Note: Replaced above call with below as PlayerManager is a singleton for this express purpose
+            PlayerManager.playerManager.enabled = false;
             YouDiedScreen.SetActive(true);
         }
     }
