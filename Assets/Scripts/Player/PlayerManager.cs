@@ -128,19 +128,23 @@ public class PlayerManager : MonoBehaviour
     // Checks if the AnimationState is locked, otherwise use a Firewall pattern to determine current player state for Animation
     private int GetAnimationState()
     {
+        // If the time elased since the frame begun is less than our locked state timer, return whatever animation state the player was in
         if (Time.time < _LockedTimer) return _currentState;
 
         // Firewall pattern priorities :: This will go down the list from most important to least important
-        if (IsAttacking)
+        if (CanAttack == true && IsAttacking == true)
         {
+            CanAttack = false;
             IsAttacking = false;
+            StartCoroutine("AttackCooldown");
             return LockAnimationState(Anim_Attack, 0.6f);
         }
         if (IsJumping) return Anim_Jump;
         if (IsGrounded) return playerRB.velocity.x == 0 ? LockAnimationState(Anim_Idle, 0.15f) : LockAnimationState(Anim_Walk, 0.15f);
         return playerRB.velocity.y > 0 ? Anim_Jump : LockAnimationState(Anim_Fall, 0.25f);
 
-        // LockAnimationState() :: Takes an Animation hashed number and a time before allowing any animation change
+        // LockAnimationState() :: Takes an Animation hashed number and a time before allowing any animation change.
+        // Animation hashes are under the "Animator variables" comment at the top of the file.
         int LockAnimationState(int s, float t)
         {
             _LockedTimer = Time.time + t;
@@ -153,7 +157,7 @@ public class PlayerManager : MonoBehaviour
     private void FixedUpdate()
     {
         CheckGrounded();
-        CheckEnemyInRange();
+        // CheckEnemyInRange(); // Function deprecated. See function definition for reasoning.
         desiredMoveVelocity = new Vector2(direction.x, 0f) * Mathf.Max(maxSpeed, 0f);
 
         moveVelocity = playerRB.velocity;
@@ -213,20 +217,20 @@ public class PlayerManager : MonoBehaviour
         if (CanAttack == false) return;
         IsAttacking = true;
 
-        if (EnemyInRange == true)
-        {
-            Collider2D[] colliders;
-            if (playerSpriteRenderer.flipX == false) colliders = Physics2D.OverlapBoxAll(new Vector2(playerCollider.bounds.max.x + 1f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
-            else colliders = Physics2D.OverlapBoxAll(new Vector2(playerCollider.bounds.min.x - 1f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
+        //if (EnemyInRange == true)
+        //{
+        //    Collider2D[] colliders;
+        //    if (playerSpriteRenderer.flipX == false) colliders = Physics2D.OverlapBoxAll(new Vector2(playerCollider.bounds.max.x + 1f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
+        //    else colliders = Physics2D.OverlapBoxAll(new Vector2(playerCollider.bounds.min.x - 1f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
 
 
-            foreach (Collider2D col in colliders)
-            {
-                col.gameObject.SendMessage("TakeDamage", 1);
-            }
-        }
+        //    foreach (Collider2D col in colliders)
+        //    {
+        //        col.gameObject.SendMessage("TakeDamage", 1);
+        //    }
+        //}
 
-        EnemyInRange = false;
+        //EnemyInRange = false;
     }
 
     // Function stub for later development
@@ -260,18 +264,29 @@ public class PlayerManager : MonoBehaviour
         // TODO: Fix this later, with either an overlap circle or Boxcast || https://www.youtube.com/watch?v=c3iEl5AwUF8d
     }
 
-    private void CheckEnemyInRange()
-    {
-        if (playerSpriteRenderer.flipX == false) EnemyInRange = Physics2D.OverlapBox(new Vector2(playerCollider.bounds.max.x + 1f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
-        else EnemyInRange = Physics2D.OverlapBox(new Vector2(playerCollider.bounds.min.x - 1.5f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
+    // (Jamie) Note: Function deprecated as hitbox/damage system has changed. See AttackHitbox child object.
+    // Has also been repurposed for checking the player is in range on SkeletonMovementScript
+    //private void CheckEnemyInRange()
+    //{
+    //    if (playerSpriteRenderer.flipX == false) EnemyInRange = Physics2D.OverlapBox(new Vector2(playerCollider.bounds.max.x + 1f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
+    //    else EnemyInRange = Physics2D.OverlapBox(new Vector2(playerCollider.bounds.min.x - 1.5f, playerCollider.bounds.center.y), new Vector2(2f, 2f), 0f, Damageable);
 
-    }
+    //}
 
     // TempDisableJumpReset() : This temporarily disables the resetting of IsJumping due to issues with the animation states
     IEnumerator TempDisableJumpReset()
     {
         yield return new WaitForSeconds(0.5f);
         IsJumping = false;
+    }
+
+    // AttackCooldown() : This temporarily disables the CanAttack property to disable attacking for a certain length of time
+    // Prevents attack spam but also fixes an animation bug from occuring. (The animation would be stuck at the last frame.)
+    IEnumerator AttackCooldown()
+    {
+        CanAttack = false;
+        yield return new WaitForSeconds(0.9f);
+        CanAttack = true;
     }
 
     #endregion
