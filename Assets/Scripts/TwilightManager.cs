@@ -8,6 +8,7 @@ public class TwilightManager : MonoBehaviour
     public int twilightrescue;
     public bool isTwilightActive;
     public GameObject twilightbutton;
+    public int NumOfTwilightNPCS;
 
     void Start()
     {
@@ -17,7 +18,7 @@ public class TwilightManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (twilightcount == 2)
+        if (twilightcount == NumOfTwilightNPCS)
         {
             Debug.Log("Twilight active");
             twilightbutton.SetActive(true);
