@@ -17037,6 +17037,8 @@ MonoBehaviour:
   twilightrescue: 0
   isTwilightActive: 0
   twilightbutton: {fileID: 1548460463}
+  NumOfTwilightNPCS: 0
+  IgnoreTwilight: 1
 --- !u!4 &529495120
 Transform:
   m_ObjectHideFlags: 0
