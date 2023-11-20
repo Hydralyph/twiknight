@@ -15245,6 +15245,7 @@ MonoBehaviour:
   isTwilightActive: 0
   twilightbutton: {fileID: 1548460463}
   NumOfTwilightNPCS: 3
+  IgnoreTwilight: 0
 --- !u!4 &529495120
 Transform:
   m_ObjectHideFlags: 0
@@ -63415,6 +63416,10 @@ MonoBehaviour:
     - Hello young man! Press A/D to move. Left Click the continue button to... continue!
     - W will make you jump.
     - Left Click the mouse to attack!
+    - Escape will open the main menu, and clicking the buttons will open their respective
+      pages.
+    - In the Items section, one click will select the item, and double clicking will
+      use the item!
     - Good Luck!
   dialogueManager: {fileID: 570846307}
 --- !u!61 &1827390054
