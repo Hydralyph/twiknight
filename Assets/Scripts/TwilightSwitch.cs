@@ -9,19 +9,32 @@ public class TwilightSwitch : MonoBehaviour
     // public GameObject testButton; RIP
     public DialogueManager dialoguemanager;
     public DialogueTrigger dialoguetrigger;
+    public DialogueTriggerCat dialoguetriggercat;
     public GameObject testButton2; // Name change later
     public TwilightManager twilightmanager;
     private bool hasPlayer;
+    private bool hasInformed;
 
     private void Update()
     {
         if (hasPlayer && Input.GetKeyDown(KeyCode.X) && twilightmanager.isTwilightActive)
         {
-            // PlayerManager.playerManager.CanMove = false;
-            Debug.Log("Pressed X");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            if (hasInformed)
+            {
+                // PlayerManager.playerManager.CanMove = false;
+                Debug.Log("Pressed X");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
-            // PlayerManager.playerManager.CanMove = true;
+                // PlayerManager.playerManager.CanMove = true;
+            }
+            else
+            {
+                Debug.Log("Pressed X");
+                dialoguetriggercat.TriggerDialogue();
+                Debug.Log("isInformed by the cat");
+                hasInformed = true;
+            }
+            
         }
         else if (hasPlayer && Input.GetKeyDown(KeyCode.X))
         {
