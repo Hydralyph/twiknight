@@ -9,6 +9,8 @@ public class EnemyHealth : MonoBehaviour
     public int currentHealth;
     public Sprite portrait;
     public AudioClip deathSound;
+    public bool IsBoss;
+    public GameObject bossManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +29,8 @@ public class EnemyHealth : MonoBehaviour
         if(currentHealth <= 0)
         {
             GetComponent<AudioSource>().PlayOneShot(deathSound);
-            Destroy (gameObject);   
+            if (IsBoss) bossManager.GetComponent<BossManager>().BossHasDied();
+            Destroy(gameObject);
         }
     }
 }
