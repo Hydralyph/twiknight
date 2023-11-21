@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SkeletonMovementScript : MonoBehaviour
 {
+    private SpriteRenderer _sr;
 
     public Transform[] patrolPoints; // adding array for location of patrol points monster will move to and back from
     public float moveSpeed; // speed of skeleton movement
@@ -13,6 +14,11 @@ public class SkeletonMovementScript : MonoBehaviour
     public Transform playerTransform;
     public bool isChasing;
     public float chaseDistance; // how close we need to get before monster chases us
+
+    private void Start()
+    {
+        _sr = GetComponentInChildren<SpriteRenderer>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -25,12 +31,14 @@ public class SkeletonMovementScript : MonoBehaviour
              if(transform.position.x > playerTransform.position.x)
             {
                 // make monster turn to face us
-                transform.localScale = new Vector3(-1, 1, 1);
+                //transform.localScale = new Vector3(-1, 1, 1);
+                _sr.flipX = true;
                 transform.position += Vector3.left * moveSpeed * Time.deltaTime; // if player is on monsters left side
             }
             if (transform.position.x < playerTransform.position.x)
             {
-                transform.localScale = new Vector3(1, 1, 1);
+                //transform.localScale = new Vector3(1, 1, 1);
+                _sr.flipX = false;
                 transform.position += Vector3.right * moveSpeed * Time.deltaTime; // if player is on monsters right side
             
         }
@@ -52,8 +60,8 @@ public class SkeletonMovementScript : MonoBehaviour
                 //check to tsee if skeleton has moved to destination
                 if (Vector2.Distance(transform.position, patrolPoints[0].position) < .2f)
                 {
-                    transform.localScale = new Vector3(1, 1, 1); // effects scale turns around enemy
-                                                                 //send enemy to new destination
+                    //transform.localScale = new Vector3(1, 1, 1); // effects scale turns around enemy
+                    _sr.flipX = false;                                             //send enemy to new destination
                     patrolDestination = 1;
                 }
             }
@@ -64,8 +72,8 @@ public class SkeletonMovementScript : MonoBehaviour
                 //check to tsee if skeleton has moved to destination
                 if (Vector2.Distance(transform.position, patrolPoints[1].position) < .2f)
                 {
-                    transform.localScale = new Vector3(-1, 1, 1); // effects scale turns around enemy
-                                                                  //send enemy to new destination
+                    //transform.localScale = new Vector3(-1, 1, 1); // effects scale turns around enemy
+                    _sr.flipX = true;                                              //send enemy to new destination
                     patrolDestination = 0;
                 }
             }
