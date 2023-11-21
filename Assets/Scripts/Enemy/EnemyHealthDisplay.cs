@@ -43,14 +43,14 @@ public class EnemyHealthDisplay : MonoBehaviour
         EnemyHealth nearestEnemy = null;
 
   
-        EnemyHealth[] potentialTargets = FindObjectsOfType<EnemyHealth> ();
+        EnemyHealth[] potentialTargets = FindObjectsOfType<EnemyHealth>();
         
         foreach(EnemyHealth currentEnemy in potentialTargets)
         {
             float distanceAway = (currentEnemy.transform.position - transform.position).sqrMagnitude; // figuring out distance from our current ememy to our player
             if (distanceAway < closestEnemyDistance)
             {
-                closestEnemyDistance = distanceAway; ; // if object is closest it will display enemy health
+                closestEnemyDistance = distanceAway; // if object is closest it will display enemy health
                 nearestEnemy = currentEnemy;
 
                 maxHealth = nearestEnemy.maxHealth;
@@ -60,7 +60,7 @@ public class EnemyHealthDisplay : MonoBehaviour
         
         }
 
-        if(closestEnemyDistance <= 25) // if enemy distance is less that 25 turn health bar icons on
+        if(closestEnemyDistance <= 50) // if enemy distance is less that 25 turn health bar icons on
         {
             HealthBarOn();
         }
@@ -72,8 +72,8 @@ public class EnemyHealthDisplay : MonoBehaviour
 
     public void HealthBarOff() // turns enemy health bar off
     {
-        portraitImage.enabled = false; 
-        for(int i = 0; i < hearts.Length; i++)
+        portraitImage.enabled = false;
+        for (int i = 0; i < hearts.Length; i++)
         {
             hearts[i].enabled = false;
         }

@@ -50,7 +50,6 @@ public class PlayerManager : MonoBehaviour
     private Camera playerCamera;
     private Rigidbody2D playerRB;
     private BoxCollider2D playerCollider;
-    //public int PlayerLives { get; private set; } = 4;
 
     // Animator variables
     private Animator playerAnimator;
