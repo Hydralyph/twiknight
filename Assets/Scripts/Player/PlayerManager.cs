@@ -12,7 +12,6 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Windows;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -50,6 +49,7 @@ public class PlayerManager : MonoBehaviour
     private Camera playerCamera;
     private Rigidbody2D playerRB;
     private BoxCollider2D playerCollider;
+    public int soulPoints = 0;
 
     // Animator variables
     private Animator playerAnimator;
@@ -293,8 +293,8 @@ public class PlayerManager : MonoBehaviour
     // OnDrawGizmos - For visibility when testing attack hitbox generations
     //private void OnDrawGizmos()
     //{
-    //    Gizmos.DrawCube(new Vector3(playerCollider.bounds.max.x + 1f, playerCollider.bounds.center.y, 0f), new Vector3(2f, 2f, 0f));
-    //    Gizmos.DrawCube(new Vector3(playerCollider.bounds.min.x - 1f, playerCollider.bounds.center.y, 0f), new Vector3(2f, 2f, 0f));
+    //    Gizmos.DrawCube(new Vector3(GetComponent<BoxCollider2D>().bounds.max.x + 1f, GetComponent<BoxCollider2D>().bounds.center.y, 0f), new Vector3(2f, 2f, 0f));
+    //    Gizmos.DrawCube(new Vector3(GetComponent<BoxCollider2D>().bounds.min.x - 1f, GetComponent<BoxCollider2D>().bounds.center.y, 0f), new Vector3(2f, 2f, 0f));
 
     //}
 
