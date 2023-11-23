@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Twinight Game Folder/Main Menu/Game.unity
     guid: f01bcd690c7482042ae74410c4dbdf47
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Twinight Game Folder/Main Menu/Inside Straw House.unity
     guid: b989234be283a8d4fad240b716d4f281
   - enabled: 1
