@@ -8,8 +8,8 @@ public class DialogueColTwi : MonoBehaviour
 {
     public DialogueManager dialoguemanager;
     public DialogueTrigger dialoguetrigger;
-    public GameObject testButton;
-    public GameObject testButton2;
+    // public GameObject testButton; RIP
+    public GameObject testButton2; // Name change later
     public TwilightManager twilightmanager;
     private bool hasPlayer;
     private bool hasTalked;
@@ -42,7 +42,7 @@ public class DialogueColTwi : MonoBehaviour
         Debug.Log("Object Entered Dialogue Trigger");
         if (other.CompareTag("Player"))
         {
-            testButton.SetActive(true);
+            // testButton.SetActive(true);
             testButton2.SetActive(true);
             hasPlayer = true;
         }
@@ -57,7 +57,7 @@ public class DialogueColTwi : MonoBehaviour
         Debug.Log("Object Exited Dialogue Trigger");
         if (other.CompareTag("Player"))
         {
-            testButton.SetActive(false);
+            // testButton.SetActive(false);
             testButton2.SetActive(false);
             hasPlayer = false;
             dialoguemanager.EndDialogue();
