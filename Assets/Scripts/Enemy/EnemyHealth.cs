@@ -30,6 +30,10 @@ public class EnemyHealth : MonoBehaviour
         {
             GetComponent<AudioSource>().PlayOneShot(deathSound);
             if (IsBoss) bossManager.GetComponent<BossManager>().BossHasDied();
+
+            if (IsBoss) PlayerManager.playerManager.soulPoints += 2;
+            else PlayerManager.playerManager.soulPoints += 1;
+
             Destroy(gameObject);
         }
     }
